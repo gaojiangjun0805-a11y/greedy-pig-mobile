@@ -1301,6 +1301,9 @@
         normal: 210,
         fast: 160
       };
+      const bgmSource = "audio/bgm-suno-candy-path.mp3";
+      const bgmVolume = .18;
+      const bgmDuckedVolume = .055;
       const foods = [
         { name: "鸡胸肉", icon: "🥩", growth: 1, score: 10, color: "#33b7a7", voice: "audio/chicken-breast.m4a", line: "吃鸡胸肉漏！" },
         { name: "一碗面", icon: "🍜", growth: 1, score: 12, color: "#f9d85e", voice: "audio/noodles.m4a", line: "吃面条漏！" },
@@ -1345,7 +1348,7 @@
       let masterGain = null;
       let bgmGain = null;
       let sfxGain = null;
-      let bgmTimer = null;
+      let bgmPlayer = null;
       let voicePlayer = null;
       let muted = false;
       let touchStart = null;
@@ -1849,13 +1852,17 @@
         masterGain = audioCtx.createGain();
         bgmGain = audioCtx.createGain();
         sfxGain = audioCtx.createGain();
+        bgmPlayer = new Audio(bgmSource);
+        bgmPlayer.loop = true;
+        bgmPlayer.preload = "auto";
+        bgmPlayer.volume = bgmVolume;
         voicePlayer = new Audio();
         voicePlayer.preload = "auto";
         voicePlayer.volume = .9;
         voicePlayer.playbackRate = 1.12;
         masterGain.gain.value = muted ? 0 : 1;
-        bgmGain.gain.value = .045;
-        sfxGain.gain.value = .16;
+        bgmGain.gain.value = 1;
+        sfxGain.gain.value = .18;
         bgmGain.connect(masterGain);
         sfxGain.connect(masterGain);
         masterGain.connect(audioCtx.destination);
@@ -1878,20 +1885,17 @@
       }
 
       function playBgm() {
-        if (!audioCtx || bgmTimer || muted) return;
-        const notes = [262, 330, 392, 330, 294, 349, 440, 392];
-        let index = 0;
-        bgmTimer = window.setInterval(() => {
-          playTone(bgmGain, notes[index % notes.length], .22, "triangle", 0, .42);
-          playTone(bgmGain, notes[(index + 2) % notes.length] / 2, .28, "sine", .01, .24);
-          index += 1;
-        }, 320);
+        if (!bgmPlayer || muted || !bgmPlayer.paused) return;
+        bgmPlayer.volume = bgmVolume;
+        const playResult = bgmPlayer.play();
+        if (playResult && typeof playResult.catch === "function") {
+          playResult.catch(() => {});
+        }
       }
 
       function stopBgm() {
-        if (!bgmTimer) return;
-        window.clearInterval(bgmTimer);
-        bgmTimer = null;
+        if (!bgmPlayer) return;
+        bgmPlayer.pause();
       }
 
       function playSfx(kind, growth = 1) {
@@ -1906,9 +1910,8 @@
       }
 
       function duckBgm(shouldDuck) {
-        if (!audioCtx || !bgmGain) return;
-        bgmGain.gain.cancelScheduledValues(audioCtx.currentTime);
-        bgmGain.gain.setTargetAtTime(shouldDuck ? .012 : .045, audioCtx.currentTime, .04);
+        if (!bgmPlayer) return;
+        bgmPlayer.volume = shouldDuck ? bgmDuckedVolume : bgmVolume;
       }
 
       function stopSpeech() {
