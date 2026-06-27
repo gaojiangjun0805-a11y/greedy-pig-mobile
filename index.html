@@ -382,6 +382,10 @@
       gap: 7px;
     }
 
+    .board-touch-pad {
+      display: none;
+    }
+
     .touch-pad button:nth-child(1) {
       grid-column: 2;
     }
@@ -492,10 +496,15 @@
 
       .stage {
         padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 8px;
       }
 
       .board-shell {
-        width: min(100%, calc(100dvh - 306px));
+        width: min(100%, calc(100dvh - 154px));
         min-width: 0;
       }
 
@@ -505,6 +514,29 @@
 
       .food-panel {
         max-height: 188px;
+      }
+
+      .side > .touch-pad {
+        display: none;
+      }
+
+      .board-touch-pad {
+        display: grid;
+        width: min(100%, 260px);
+        grid-template-columns: repeat(3, minmax(58px, 1fr));
+        grid-template-rows: repeat(2, 44px);
+        gap: 7px;
+        padding: 6px;
+        border: 1px solid rgba(42, 33, 50, .1);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, .6);
+        box-shadow: 0 8px 18px rgba(42, 33, 50, .1);
+      }
+
+      .board-touch-pad button {
+        width: 100%;
+        min-width: 0;
+        min-height: 44px;
       }
     }
 
@@ -609,6 +641,12 @@
       <div class="board-shell">
         <canvas id="gameCanvas" width="720" height="720" aria-label="贪吃猪棋盘"></canvas>
       </div>
+      <nav class="touch-pad board-touch-pad" aria-label="贴近棋盘的方向控制">
+        <button class="icon" type="button" data-dir="up" aria-label="向上">↑</button>
+        <button class="icon" type="button" data-dir="left" aria-label="向左">←</button>
+        <button class="icon" type="button" data-dir="down" aria-label="向下">↓</button>
+        <button class="icon" type="button" data-dir="right" aria-label="向右">→</button>
+      </nav>
     </section>
 
     <aside class="side" aria-label="游戏信息">
