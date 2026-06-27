@@ -750,6 +750,362 @@
         grid-column: 3;
       }
     }
+
+    /* Generated bitmap UI skin. The PNG provides the clay lighting, texture, frame, buttons, and decorations. */
+    html,
+    body {
+      min-height: 100%;
+      background: #35afd9;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(255,255,255,.16), transparent 34%),
+        #35afd9;
+    }
+
+    body::before {
+      display: none;
+    }
+
+    .app {
+      position: relative;
+      width: min(100vw, calc(100dvh * 941 / 1672));
+      height: min(100dvh, calc(100vw * 1672 / 941));
+      max-width: none;
+      margin: 0;
+      padding: 0;
+      display: block;
+      overflow: hidden;
+      aspect-ratio: 941 / 1672;
+      background: url("assets/clay-game-ui.png") center / 100% 100% no-repeat;
+    }
+
+    .stage {
+      position: absolute;
+      left: 12.8%;
+      top: 15.75%;
+      width: 55.8%;
+      height: 38.45%;
+      display: block;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
+      overflow: visible;
+      z-index: 2;
+    }
+
+    .stage::before {
+      display: none;
+    }
+
+    .board-shell {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      min-width: 0;
+      aspect-ratio: auto;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      overflow: hidden;
+    }
+
+    canvas {
+      background: transparent;
+    }
+
+    .side {
+      position: absolute;
+      inset: 0;
+      display: block;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
+      overflow: visible;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .brand,
+    .subtitle,
+    .food-panel,
+    .side > .touch-pad {
+      display: none;
+    }
+
+    .metrics {
+      position: absolute;
+      inset: 0;
+      display: block;
+      pointer-events: none;
+    }
+
+    .metric {
+      position: absolute;
+      min-height: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .metric span {
+      display: none;
+    }
+
+    .metric strong {
+      height: 100%;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      color: #473528;
+      font-size: min(6.2vw, 34px);
+      font-weight: 950;
+      line-height: 1;
+      text-shadow: 0 2px 0 rgba(255,255,255,.28);
+    }
+
+    .metric:nth-child(1) {
+      left: 9.35%;
+      top: 64.82%;
+      width: 13.85%;
+      height: 4.15%;
+    }
+
+    .metric:nth-child(2) {
+      left: 25.55%;
+      top: 64.82%;
+      width: 11.3%;
+      height: 4.15%;
+    }
+
+    .metric:nth-child(3),
+    .metric:nth-child(4) {
+      display: none;
+    }
+
+    .toolbar,
+    .side > .settings {
+      position: absolute;
+      inset: 0;
+      display: block;
+      pointer-events: none;
+    }
+
+    .toolbar button,
+    .side > .settings button,
+    .board-touch-pad button {
+      position: absolute;
+      min-width: 0;
+      min-height: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 20%;
+      color: transparent;
+      background: transparent !important;
+      box-shadow: none !important;
+      text-shadow: none;
+      pointer-events: auto;
+    }
+
+    #pauseButton {
+      left: 22.1%;
+      top: 70.9%;
+      width: 13.5%;
+      height: 6.5%;
+    }
+
+    #restartButton {
+      left: 43.5%;
+      top: 70.9%;
+      width: 13.5%;
+      height: 6.5%;
+    }
+
+    #soundButton {
+      left: 63.8%;
+      top: 70.9%;
+      width: 14%;
+      height: 6.5%;
+    }
+
+    .side > .settings .control-row,
+    .side > .settings .control-label {
+      display: block;
+    }
+
+    .side > .settings .control-label {
+      display: none;
+    }
+
+    .side > .settings .control-row {
+      position: absolute;
+      margin: 0;
+      padding: 0;
+      width: 24.5%;
+      height: 4.9%;
+      pointer-events: auto;
+    }
+
+    .side > .settings .control-row:nth-child(1) {
+      left: 37.8%;
+      top: 64.68%;
+    }
+
+    .side > .settings .control-row:nth-child(2) {
+      left: 65.0%;
+      top: 64.68%;
+      width: 27.7%;
+    }
+
+    .side > .settings .choice-row {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4.5%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+    }
+
+    .side > .settings .choice-row button {
+      position: relative;
+      inset: auto;
+      width: 100%;
+      height: 100%;
+    }
+
+    .board-touch-pad {
+      position: absolute;
+      left: 104%;
+      top: 27%;
+      width: 47.5%;
+      height: 59%;
+      display: block;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .board-touch-pad button:nth-child(1) {
+      left: 28%;
+      top: 0;
+      width: 46%;
+      height: 31%;
+    }
+
+    .board-touch-pad button:nth-child(2) {
+      left: 0;
+      top: 33%;
+      width: 46%;
+      height: 31%;
+    }
+
+    .board-touch-pad button:nth-child(3) {
+      left: 28%;
+      top: 67%;
+      width: 46%;
+      height: 31%;
+    }
+
+    .board-touch-pad button:nth-child(4) {
+      left: 54%;
+      top: 33%;
+      width: 46%;
+      height: 31%;
+    }
+
+    .overlay {
+      z-index: 10;
+      background: rgba(22, 94, 125, .34);
+      backdrop-filter: blur(3px);
+    }
+
+    .dialog {
+      width: min(78vw, 420px);
+      padding: 22px 20px 18px;
+      border: 0;
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(255,255,255,.58), transparent 22%),
+        linear-gradient(180deg, #fff0cc, #e7c998);
+      box-shadow:
+        inset 0 3px 0 rgba(255,255,255,.55),
+        inset 0 -8px 0 rgba(172, 117, 69, .16),
+        0 14px 0 rgba(150, 101, 68, .22),
+        0 28px 38px rgba(40, 75, 92, .35);
+    }
+
+    .dialog-title {
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .dialog-title span {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 32% 20%, rgba(255,255,255,.48), transparent 28%),
+        linear-gradient(180deg, #ff9aab, #e76478);
+      box-shadow: 0 8px 0 rgba(174, 73, 91, .24), 0 14px 18px rgba(87,70,79,.16);
+    }
+
+    .dialog h2 {
+      color: #e86478;
+      font-size: 38px;
+      text-shadow: 0 3px 0 rgba(255,255,255,.55), 0 7px 0 rgba(138, 76, 67, .14);
+    }
+
+    .dialog p,
+    .last-food {
+      color: #5e4030;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .overlay[data-mode="start"] .dialog p,
+    .overlay[data-mode="start"] .dialog > .settings,
+    .overlay[data-mode="start"] .dialog > .rank,
+    .overlay[data-mode="gameover"] .dialog > .settings,
+    .overlay[data-mode="gameover"] .dialog > .rank {
+      display: none;
+    }
+
+    .dialog-actions {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    button.primary {
+      min-height: 62px;
+      border-radius: 20px;
+      color: #fff2ec;
+      font-size: 26px;
+      background:
+        radial-gradient(circle at 25% 16%, rgba(255,255,255,.45), transparent 30%),
+        linear-gradient(180deg, #ff8a99, #df5f73) !important;
+      box-shadow: 0 8px 0 rgba(166, 78, 77, .36), 0 16px 18px rgba(87,70,79,.16), inset 0 2px 0 rgba(255,255,255,.42) !important;
+    }
   </style>
 </head>
 <body>
@@ -834,9 +1190,9 @@
         <div class="control-row">
           <span class="control-label">盘面</span>
           <div class="choice-row" aria-label="盘面大小">
-            <button class="board-button" type="button" data-board-size="small">16</button>
-            <button class="board-button" type="button" data-board-size="medium" aria-pressed="true">20</button>
-            <button class="board-button" type="button" data-board-size="large">24</button>
+            <button class="board-button" type="button" data-board-size="small">小</button>
+            <button class="board-button" type="button" data-board-size="medium" aria-pressed="true">中</button>
+            <button class="board-button" type="button" data-board-size="large">大</button>
           </div>
         </div>
         <div class="control-row">
@@ -857,7 +1213,7 @@
       </nav>
     </aside>
 
-    <div class="overlay" id="startOverlay">
+    <div class="overlay" id="startOverlay" data-mode="start">
       <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
         <div class="dialog-title">
           <span aria-hidden="true">🐷</span>
@@ -868,9 +1224,9 @@
           <div class="control-row">
             <span class="control-label">盘面</span>
             <div class="choice-row" aria-label="开局盘面大小">
-              <button class="board-button" type="button" data-board-size="small">16</button>
-              <button class="board-button" type="button" data-board-size="medium" aria-pressed="true">20</button>
-              <button class="board-button" type="button" data-board-size="large">24</button>
+              <button class="board-button" type="button" data-board-size="small">小</button>
+              <button class="board-button" type="button" data-board-size="medium" aria-pressed="true">中</button>
+              <button class="board-button" type="button" data-board-size="large">大</button>
             </div>
           </div>
           <div class="control-row">
@@ -936,14 +1292,14 @@
       const boardButtons = [...document.querySelectorAll(".board-button")];
 
       const boardSizes = {
-        small: 16,
-        medium: 20,
-        large: 24
+        small: 10,
+        medium: 12,
+        large: 14
       };
       const speeds = {
-        slow: 170,
-        normal: 132,
-        fast: 104
+        slow: 260,
+        normal: 210,
+        fast: 160
       };
       const foods = [
         { name: "鸡胸肉", icon: "🥩", growth: 1, score: 10, color: "#33b7a7", voice: "audio/chicken-breast.m4a", line: "吃鸡胸肉漏！" },
@@ -977,6 +1333,8 @@
       let boardSizeKey = "medium";
       let speedKey = "normal";
       let tile = 1;
+      let tileX = 1;
+      let tileY = 1;
       let dpr = 1;
       let best = Number(localStorage.getItem("greedyPigBest") || 0);
       let audioCtx = null;
@@ -990,7 +1348,7 @@
 
       function resetGame() {
         const mid = Math.floor(gridSize / 2);
-        const headX = Math.max(5, Math.floor(gridSize * .32));
+        const headX = Math.max(3, Math.floor(gridSize * .26));
         snake = [
           { x: headX, y: mid },
           { x: headX - 1, y: mid },
@@ -1033,6 +1391,7 @@
       }
 
       function showStart() {
+        startOverlay.dataset.mode = "start";
         dialogTitle.textContent = "贪吃猪";
         dialogCopy.textContent = "猪头带队，尾巴跟上。食物越不健康，吃完以后身体越长。";
         startButton.textContent = "开始";
@@ -1045,6 +1404,7 @@
         gameOver = true;
         stopBgm();
         stopSpeech();
+        startOverlay.dataset.mode = "gameover";
         dialogTitle.textContent = "吃撑了";
         dialogCopy.textContent = `本局分数 ${score}，猪身长度 ${snake.length}。`;
         startButton.textContent = "再来一局";
@@ -1150,7 +1510,9 @@
         canvas.width = Math.round(rect.width * dpr);
         canvas.height = Math.round(rect.height * dpr);
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        tile = rect.width / gridSize;
+        tileX = rect.width / gridSize;
+        tileY = rect.height / gridSize;
+        tile = Math.min(tileX, tileY);
         render();
       }
 
@@ -1167,8 +1529,8 @@
 
       function cellCenter(cell) {
         return {
-          x: (cell.x + .5) * tile,
-          y: (cell.y + .5) * tile
+          x: (cell.x + .5) * tileX,
+          y: (cell.y + .5) * tileY
         };
       }
 
@@ -1185,37 +1547,20 @@
       }
 
       function drawBoard(width, height) {
-        const grad = ctx.createLinearGradient(0, 0, width, height);
-        grad.addColorStop(0, "#f4dfb7");
-        grad.addColorStop(.52, "#ead0a0");
-        grad.addColorStop(1, "#d6b37b");
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, width, height);
-
-        ctx.fillStyle = "rgba(255,255,255,.12)";
-        for (let y = tile * .4; y < height; y += tile * 2) {
-          for (let x = tile * .35; x < width; x += tile * 2.2) {
-            ctx.beginPath();
-            ctx.ellipse(x, y, tile * .08, tile * .035, -.45, 0, Math.PI * 2);
-            ctx.fill();
-          }
-        }
-
-        ctx.strokeStyle = "rgba(125,92,63,.13)";
+        ctx.save();
+        ctx.strokeStyle = "rgba(110, 78, 49, .12)";
         ctx.lineWidth = 1;
         for (let i = 1; i < gridSize; i += 1) {
-          const p = i * tile;
+          const x = i * tileX;
+          const y = i * tileY;
           ctx.beginPath();
-          ctx.moveTo(p, 0);
-          ctx.lineTo(p, height);
-          ctx.moveTo(0, p);
-          ctx.lineTo(width, p);
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, height);
+          ctx.moveTo(0, y);
+          ctx.lineTo(width, y);
           ctx.stroke();
         }
-
-        ctx.strokeStyle = "rgba(119,78,62,.24)";
-        ctx.lineWidth = 3;
-        ctx.strokeRect(1.5, 1.5, width - 3, height - 3);
+        ctx.restore();
       }
 
       function drawFood() {
@@ -1227,7 +1572,7 @@
         ctx.shadowColor = "rgba(74,50,55,.22)";
         ctx.shadowBlur = tile * .18;
         ctx.shadowOffsetY = tile * .1;
-        drawClayFood(food.name, Math.max(30, tile * 1.18));
+        drawClayFood(food.name, Math.max(38, tile * 1.55));
         ctx.restore();
       }
 
@@ -1362,11 +1707,11 @@
         ctx.fillStyle = index % 2 === 0 ? "#ff9cc0" : "#ffb2cb";
         ctx.strokeStyle = "rgba(163,43,95,.2)";
         ctx.lineWidth = Math.max(1, tile * .04);
-        roundRect(ctx, -tile * .39, -tile * .34, tile * .78, tile * .68, tile * .22);
+        roundRect(ctx, -tile * .56, -tile * .46, tile * 1.12, tile * .92, tile * .34);
         ctx.fill();
         ctx.stroke();
         ctx.fillStyle = "rgba(255,255,255,.28)";
-        roundRect(ctx, -tile * .25, -tile * .22, tile * .5, tile * .14, tile * .07);
+        roundRect(ctx, -tile * .34, -tile * .28, tile * .68, tile * .18, tile * .09);
         ctx.fill();
         ctx.restore();
       }
@@ -1379,7 +1724,7 @@
         ctx.translate(center.x, center.y);
         ctx.rotate(angle);
         ctx.strokeStyle = "#ec5c91";
-        ctx.lineWidth = Math.max(3, tile * .11);
+        ctx.lineWidth = Math.max(3, tile * .14);
         ctx.lineCap = "round";
         ctx.beginPath();
         ctx.moveTo(tile * .2, 0);
@@ -1403,31 +1748,31 @@
         ctx.strokeStyle = "rgba(126,44,80,.24)";
         ctx.lineWidth = Math.max(1, tile * .04);
         ctx.beginPath();
-        ctx.ellipse(0, 0, tile * .47, tile * .41, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, 0, tile * .68, tile * .6, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
 
         ctx.fillStyle = "#ff76a7";
         ctx.beginPath();
-        ctx.ellipse(-tile * .18, -tile * .35, tile * .15, tile * .22, -.45, 0, Math.PI * 2);
-        ctx.ellipse(-tile * .18, tile * .35, tile * .15, tile * .22, .45, 0, Math.PI * 2);
+        ctx.ellipse(-tile * .26, -tile * .5, tile * .2, tile * .3, -.45, 0, Math.PI * 2);
+        ctx.ellipse(-tile * .26, tile * .5, tile * .2, tile * .3, .45, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.shadowColor = "transparent";
         ctx.fillStyle = "#2a2132";
         ctx.beginPath();
-        ctx.arc(tile * .09, -tile * .16, tile * .045, 0, Math.PI * 2);
-        ctx.arc(tile * .09, tile * .16, tile * .045, 0, Math.PI * 2);
+        ctx.arc(tile * .12, -tile * .22, tile * .06, 0, Math.PI * 2);
+        ctx.arc(tile * .12, tile * .22, tile * .06, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = "#ffc0d5";
         ctx.beginPath();
-        ctx.ellipse(tile * .26, 0, tile * .18, tile * .24, 0, 0, Math.PI * 2);
+        ctx.ellipse(tile * .38, 0, tile * .24, tile * .32, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.fillStyle = "#2a2132";
         ctx.beginPath();
-        ctx.arc(tile * .31, -tile * .075, tile * .035, 0, Math.PI * 2);
-        ctx.arc(tile * .31, tile * .075, tile * .035, 0, Math.PI * 2);
+        ctx.arc(tile * .44, -tile * .1, tile * .045, 0, Math.PI * 2);
+        ctx.arc(tile * .44, tile * .1, tile * .045, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
       }
