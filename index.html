@@ -881,14 +881,14 @@
 
     .metric:nth-child(1) {
       left: 9.35%;
-      top: 64.82%;
+      top: 67.9%;
       width: 13.85%;
       height: 4.15%;
     }
 
     .metric:nth-child(2) {
       left: 25.55%;
-      top: 64.82%;
+      top: 67.9%;
       width: 11.3%;
       height: 4.15%;
     }
@@ -1292,9 +1292,9 @@
       const boardButtons = [...document.querySelectorAll(".board-button")];
 
       const boardSizes = {
-        small: 10,
-        medium: 12,
-        large: 14
+        small: { cols: 10, rows: 15 },
+        medium: { cols: 12, rows: 18 },
+        large: { cols: 14, rows: 21 }
       };
       const speeds = {
         slow: 260,
@@ -1329,12 +1329,16 @@
       let gameOver;
       let lastTime;
       let accumulator;
-      let gridSize = boardSizes.medium;
+      let boardConfig = boardSizes.medium;
+      let gridCols = boardConfig.cols;
+      let gridRows = boardConfig.rows;
       let boardSizeKey = "medium";
       let speedKey = "normal";
       let tile = 1;
       let tileX = 1;
       let tileY = 1;
+      let boardOffsetX = 0;
+      let boardOffsetY = 0;
       let dpr = 1;
       let best = Number(localStorage.getItem("greedyPigBest") || 0);
       let audioCtx = null;
@@ -1347,8 +1351,8 @@
       let touchStart = null;
 
       function resetGame() {
-        const mid = Math.floor(gridSize / 2);
-        const headX = Math.max(3, Math.floor(gridSize * .26));
+        const mid = Math.floor(gridRows / 2);
+        const headX = Math.max(3, Math.floor(gridCols * .26));
         snake = [
           { x: headX, y: mid },
           { x: headX - 1, y: mid },
@@ -1365,7 +1369,7 @@
         gameOver = false;
         lastTime = 0;
         accumulator = 0;
-        food = spawnFood({ x: Math.min(gridSize - 3, headX + 5), y: mid });
+        food = spawnFood({ x: Math.min(gridCols - 3, headX + 5), y: mid });
         updateHud();
         render();
       }
@@ -1429,15 +1433,15 @@
 
       function spawnFood(preferredCell) {
         const openCells = [];
-        for (let y = 0; y < gridSize; y += 1) {
-          for (let x = 0; x < gridSize; x += 1) {
+        for (let y = 0; y < gridRows; y += 1) {
+          for (let x = 0; x < gridCols; x += 1) {
             if (!snake || !snake.some(part => part.x === x && part.y === y)) {
               openCells.push({ x, y });
             }
           }
         }
         const preferredOpen = preferredCell && openCells.some(cell => cell.x === preferredCell.x && cell.y === preferredCell.y);
-        const cell = preferredOpen ? preferredCell : openCells[Math.floor(Math.random() * openCells.length)] || { x: 10, y: 10 };
+        const cell = preferredOpen ? preferredCell : openCells[Math.floor(Math.random() * openCells.length)] || { x: Math.floor(gridCols / 2), y: Math.floor(gridRows / 2) };
         const type = foods[Math.floor(Math.random() * foods.length)];
         return { ...cell, ...type };
       }
@@ -1461,7 +1465,7 @@
         };
 
         const eatsFood = nextHead.x === food.x && nextHead.y === food.y;
-        const hitsWall = nextHead.x < 0 || nextHead.y < 0 || nextHead.x >= gridSize || nextHead.y >= gridSize;
+        const hitsWall = nextHead.x < 0 || nextHead.y < 0 || nextHead.x >= gridCols || nextHead.y >= gridRows;
         const hitsBody = snake.some((part, index) => {
           const isTailMoving = index === snake.length - 1 && !eatsFood && growQueue === 0;
           return !isTailMoving && part.x === nextHead.x && part.y === nextHead.y;
@@ -1510,9 +1514,11 @@
         canvas.width = Math.round(rect.width * dpr);
         canvas.height = Math.round(rect.height * dpr);
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        tileX = rect.width / gridSize;
-        tileY = rect.height / gridSize;
-        tile = Math.min(tileX, tileY);
+        tile = Math.min(rect.width / gridCols, rect.height / gridRows);
+        tileX = tile;
+        tileY = tile;
+        boardOffsetX = (rect.width - gridCols * tile) / 2;
+        boardOffsetY = (rect.height - gridRows * tile) / 2;
         render();
       }
 
@@ -1529,8 +1535,8 @@
 
       function cellCenter(cell) {
         return {
-          x: (cell.x + .5) * tileX,
-          y: (cell.y + .5) * tileY
+          x: boardOffsetX + (cell.x + .5) * tile,
+          y: boardOffsetY + (cell.y + .5) * tile
         };
       }
 
@@ -1548,18 +1554,45 @@
 
       function drawBoard(width, height) {
         ctx.save();
-        ctx.strokeStyle = "rgba(110, 78, 49, .12)";
-        ctx.lineWidth = 1;
-        for (let i = 1; i < gridSize; i += 1) {
-          const x = i * tileX;
-          const y = i * tileY;
+        const x0 = boardOffsetX;
+        const y0 = boardOffsetY;
+        const boardWidth = gridCols * tile;
+        const boardHeight = gridRows * tile;
+        const grad = ctx.createLinearGradient(x0, y0, x0 + boardWidth, y0 + boardHeight);
+        grad.addColorStop(0, "#f8dba4");
+        grad.addColorStop(.55, "#edc37e");
+        grad.addColorStop(1, "#dda964");
+        ctx.fillStyle = grad;
+        ctx.fillRect(x0, y0, boardWidth, boardHeight);
+
+        ctx.fillStyle = "rgba(255,255,255,.16)";
+        for (let y = y0 + tile * .35; y < y0 + boardHeight; y += tile * 2.1) {
+          for (let x = x0 + tile * .35; x < x0 + boardWidth; x += tile * 2.2) {
+            ctx.beginPath();
+            ctx.ellipse(x, y, tile * .09, tile * .035, -.45, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        ctx.strokeStyle = "rgba(122, 79, 42, .24)";
+        ctx.lineWidth = Math.max(1, tile * .045);
+        for (let i = 1; i < gridCols; i += 1) {
+          const x = x0 + i * tile;
           ctx.beginPath();
-          ctx.moveTo(x, 0);
-          ctx.lineTo(x, height);
-          ctx.moveTo(0, y);
-          ctx.lineTo(width, y);
+          ctx.moveTo(x, y0);
+          ctx.lineTo(x, y0 + boardHeight);
           ctx.stroke();
         }
+        for (let i = 1; i < gridRows; i += 1) {
+          const y = y0 + i * tile;
+          ctx.beginPath();
+          ctx.moveTo(x0, y);
+          ctx.lineTo(x0 + boardWidth, y);
+          ctx.stroke();
+        }
+        ctx.strokeStyle = "rgba(105, 67, 38, .22)";
+        ctx.lineWidth = Math.max(1, tile * .08);
+        ctx.strokeRect(x0 + .5, y0 + .5, boardWidth - 1, boardHeight - 1);
         ctx.restore();
       }
 
@@ -1953,7 +1986,7 @@
       }
 
       function syncBoardSizeControls() {
-        document.documentElement.style.setProperty("--grid-size", String(gridSize));
+        document.documentElement.style.setProperty("--grid-size", String(gridCols));
         boardButtons.forEach(button => {
           button.setAttribute("aria-pressed", button.dataset.boardSize === boardSizeKey ? "true" : "false");
         });
@@ -1962,7 +1995,9 @@
       function setBoardSize(nextSizeKey) {
         if (!boardSizes[nextSizeKey] || nextSizeKey === boardSizeKey) return;
         boardSizeKey = nextSizeKey;
-        gridSize = boardSizes[boardSizeKey];
+        boardConfig = boardSizes[boardSizeKey];
+        gridCols = boardConfig.cols;
+        gridRows = boardConfig.rows;
         syncBoardSizeControls();
         stopBgm();
         stopSpeech();
