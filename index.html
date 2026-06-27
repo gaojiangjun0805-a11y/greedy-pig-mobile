@@ -787,9 +787,9 @@
     .stage {
       position: absolute;
       left: 12.8%;
-      top: 15.75%;
+      top: 18.18%;
       width: 55.8%;
-      height: 38.45%;
+      height: 34.95%;
       display: block;
       padding: 0;
       border: 0;
@@ -1292,9 +1292,9 @@
       const boardButtons = [...document.querySelectorAll(".board-button")];
 
       const boardSizes = {
-        small: { cols: 10, rows: 15 },
-        medium: { cols: 12, rows: 18 },
-        large: { cols: 14, rows: 21 }
+        small: { cols: 8, rows: 12 },
+        medium: { cols: 10, rows: 15 },
+        large: { cols: 12, rows: 18 }
       };
       const speeds = {
         slow: 260,
@@ -1561,14 +1561,17 @@
         const y0 = boardOffsetY;
         const boardWidth = gridCols * tile;
         const boardHeight = gridRows * tile;
+        const boardRadius = Math.max(8, tile * .55);
         const grad = ctx.createLinearGradient(x0, y0, x0 + boardWidth, y0 + boardHeight);
-        grad.addColorStop(0, "#f8dba4");
-        grad.addColorStop(.55, "#edc37e");
-        grad.addColorStop(1, "#dda964");
+        grad.addColorStop(0, "rgba(249, 220, 164, .86)");
+        grad.addColorStop(.55, "rgba(238, 197, 126, .82)");
+        grad.addColorStop(1, "rgba(219, 165, 92, .82)");
+        roundRect(ctx, x0, y0, boardWidth, boardHeight, boardRadius);
+        ctx.clip();
         ctx.fillStyle = grad;
         ctx.fillRect(x0, y0, boardWidth, boardHeight);
 
-        ctx.fillStyle = "rgba(255,255,255,.16)";
+        ctx.fillStyle = "rgba(255,255,255,.14)";
         for (let y = y0 + tile * .35; y < y0 + boardHeight; y += tile * 2.1) {
           for (let x = x0 + tile * .35; x < x0 + boardWidth; x += tile * 2.2) {
             ctx.beginPath();
@@ -1577,7 +1580,7 @@
           }
         }
 
-        ctx.strokeStyle = "rgba(122, 79, 42, .24)";
+        ctx.strokeStyle = "rgba(111, 73, 42, .2)";
         ctx.lineWidth = Math.max(1, tile * .045);
         for (let i = 1; i < gridCols; i += 1) {
           const x = x0 + i * tile;
@@ -1593,9 +1596,13 @@
           ctx.lineTo(x0 + boardWidth, y);
           ctx.stroke();
         }
-        ctx.strokeStyle = "rgba(105, 67, 38, .22)";
+        ctx.restore();
+
+        ctx.save();
+        ctx.strokeStyle = "rgba(105, 67, 38, .18)";
         ctx.lineWidth = Math.max(1, tile * .08);
-        ctx.strokeRect(x0 + .5, y0 + .5, boardWidth - 1, boardHeight - 1);
+        roundRect(ctx, x0 + .5, y0 + .5, boardWidth - 1, boardHeight - 1, boardRadius);
+        ctx.stroke();
         ctx.restore();
       }
 
